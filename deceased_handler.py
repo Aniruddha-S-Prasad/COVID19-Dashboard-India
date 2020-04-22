@@ -5,7 +5,7 @@ import csv
 class DeceasedHandler:
 
     def __init__(self):
-        self.database_filename = 'deceased.csv'
+        self.database_filename = 'databases/deceased.csv'
         try:
             open(self.database_filename, 'r').close()
         except FileNotFoundError:

@@ -5,7 +5,7 @@ import csv
 class RecoveredHandler:
 
     def __init__(self):
-        self.database_filename = 'recovered.csv'
+        self.database_filename = 'databases/recovered.csv'
         try:
             open(self.database_filename, 'r').close()
         except FileNotFoundError:

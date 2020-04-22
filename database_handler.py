@@ -129,7 +129,7 @@ class DatabaseHandler:
         removed_count = recovered + deceased
         return dates, removed_count
 
-    def __create_connection(self, database_filename='patients.db'):
+    def __create_connection(self, database_filename='databases/patients.db'):
         connection = None
         try:
             connection = sqlite3.connect(database_filename)

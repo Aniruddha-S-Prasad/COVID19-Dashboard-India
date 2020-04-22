@@ -2,7 +2,7 @@ import json
 import requests
 import sqlite3
 
-database_filename = 'patients.db'
+database_filename = 'databases/patients.db'
 
 
 def create_connection():
@@ -60,7 +60,7 @@ def insert_patient(connection, patient):
 
 def main():
     try:
-        with open('raw_data.json', 'r', encoding='utf-8') as data_file:
+        with open('databases/raw_data.json', 'r', encoding='utf-8') as data_file:
             raw_data_json = json.load(data_file)
 
     except FileNotFoundError:
@@ -68,7 +68,7 @@ def main():
         raw_data_response = requests.get('https://api.covid19india.org/raw_data.json')
         # json.loads = json.load'string'
         raw_data_json = json.loads(raw_data_response.text)
-        with open('raw_data.json', 'w', encoding='utf-8') as data_file:
+        with open('databases/raw_data.json', 'w', encoding='utf-8') as data_file:
             json.dump(raw_data_json, data_file, ensure_ascii=False, indent=4)
 
     # Response contains a key value of {'raw_data':'{COMPLETE_DATA_SET}'}
