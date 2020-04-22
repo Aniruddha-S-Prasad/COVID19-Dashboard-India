@@ -44,7 +44,7 @@ def predict_data(init_values: np.ndarray, coeff: np.ndarray, intercept: float, o
 
 
 def remove_outliers(array: np.ndarray, max_deviation: float) -> np.ndarray:
-    for index in range(1,np.size(array)-1):
+    for index in range(1, np.size(array)-1):
         tmp = array.copy()
         tmp[index] = np.nan
         tmp = interpolate_nans(tmp)
@@ -55,7 +55,7 @@ def remove_outliers(array: np.ndarray, max_deviation: float) -> np.ndarray:
     return array
 
 
-def smooth_by_interpolation(array: np.ndarray) -> np.ndarray:
+def smooth_by_interpolation(array: np.ndarray):
     for index in range(1, np.size(array)-1):
         array[index] = np.nan
         interpolate_nans(array)
@@ -63,7 +63,7 @@ def smooth_by_interpolation(array: np.ndarray) -> np.ndarray:
 
 def interpolate_nans(array: np.ndarray) -> np.ndarray:
     x = np.arange(np.size(array))
-    array[np.isnan(array)]= np.interp(x[np.isnan(array)], x[~np.isnan(array)], array[~np.isnan(array)])
+    array[np.isnan(array)] = np.interp(x[np.isnan(array)], x[~np.isnan(array)], array[~np.isnan(array)])
     return array
 
 
