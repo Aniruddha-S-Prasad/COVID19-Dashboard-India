@@ -43,18 +43,6 @@ def predict_data(init_values: np.ndarray, coeff: np.ndarray, intercept: float, o
     return output
 
 
-def remove_outliers(array: np.ndarray, max_deviation: float) -> np.ndarray:
-    for index in range(1, np.size(array)-1):
-        tmp = array.copy()
-        tmp[index] = np.nan
-        tmp = interpolate_nans(tmp)
-        if abs(array[index] - tmp[index]) > abs(array[index]*max_deviation):
-            array[index] = np.nan
-        tmp = []
-
-    return array
-
-
 def smooth_by_interpolation(array: np.ndarray):
     for index in range(1, np.size(array)-1):
         array[index] = np.nan
@@ -67,12 +55,13 @@ def interpolate_nans(array: np.ndarray) -> np.ndarray:
     return array
 
 
-def exp_fit(x: np.ndarray, a: float, b: float) -> np.ndarray:
-    return a * np.exp(b * x)
+def delta_series(array: np.ndarray) -> np.ndarray:
+    return array - np.append(0, array[:len(array)-1])
 
 
-def lin_fit(x: np.ndarray, m: float, c: float) -> np.ndarray:
-    return m * x + c
+def change_factor_series(array: np.ndarray) -> np.ndarray:
+    d_array = delta_series(array)
+    return abs(np.divide(d_array, np.append(1, array[:len(array)-1])))
 
 
 def main():
@@ -88,28 +77,25 @@ def main():
     deceased_count = database.deceased_count
 
     removed_count = recovered_count + deceased_count
-    dremoved_count = removed_count - np.append(0, removed_count[:len(removed_count) - 1])
+    dremoved_count = delta_series(removed_count)
 
     affected_count = database.total_count
 
     infected_count = affected_count - removed_count
-    dinfected_count = infected_count - np.append(0, infected_count[:len(infected_count) - 1])
-
-    # population = 5 * np.max(affected_count)
-    # susceptible_count = population - affected_count
-    # dsusceptible_count = susceptible_count - np.append(0, susceptible_count[:len(susceptible_count)-1])
+    dinfected_count = delta_series(infected_count)
 
     offset_days = 21
     beta = np.divide(dinfected_count[offset_days:] + dremoved_count[offset_days:], infected_count[offset_days:])
     gamma = np.divide(dremoved_count[offset_days:], infected_count[offset_days:])
     gamma[gamma == 0] = np.nan
     beta[beta == 0] = np.nan
-    # beta = remove_outliers(beta, 0.5)
-    # gamma = remove_outliers(gamma, 0.5)
+    smooth_factor = 0.25
+    beta[change_factor_series(beta) > smooth_factor] = np.nan
     smooth_by_interpolation(beta)
+
+    smooth_factor = 0.80
+    gamma[change_factor_series(gamma) > smooth_factor] = np.nan
     smooth_by_interpolation(gamma)
-    # beta = interpolate_nans(beta)
-    # gamma = interpolate_nans(gamma)
 
     # TODO
     # order = 7
@@ -123,28 +109,12 @@ def main():
     # gamma_predict = predict_data(gamma[:order], gamma_fir.coef_, gamma_fir.intercept_, np.size(gamma)+30)
 
     reproductive_number = np.divide(beta, gamma)
-    # reproductive_number = remove_outliers(reproductive_number, 0.75)
-    # #reproductive_number
-    smooth_by_interpolation(reproductive_number)
+    # smooth_by_interpolation(reproductive_number)
 
     data = DataContainer(beta, gamma, reproductive_number, offset_days,  infected_count, affected_count, dates)
 
     plotter = plthl.PlotHandler()
     plotter.plot_all_data(data)
-
-    # TODO
-    # plotter.plot_data_and_fit(dates, offset_days, beta, beta_predict)
-    # plotter.plot_data_and_fit(dates, offset_days, gamma, gamma_predict)
-
-    # delta_days = 15
-    # print(f'Exponential fit for data, using data until {dates[len(dates)-delta_days]}')
-    # x = np.linspace(0, len(count)-delta_days, len(count)-delta_days)
-    # param, param_cov = curve_fit(exp_fit, x, count[0:len(count)-delta_days], p0=[0.01, 1])
-    #
-    # x = np.linspace(0, len(count), len(count))
-    #
-    # plotter = plthl.PlotHandler()
-    # plotter.plot_data_and_fit(dates, count, exp_fit(x, param[0], param[1]))
 
     plt.show()
     return 0

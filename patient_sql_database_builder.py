@@ -58,6 +58,45 @@ def insert_patient(connection, patient):
         return 1
 
 
+def create_deaths_recoveries_table(connection):
+    if connection is None:
+        raise TypeError
+
+    c = connection.cursor()
+    c.execute("""CREATE TABLE IF NOT EXISTS deaths_recoveries (
+                    slno INTEGER PRIMARY KEY,
+                    date TEXT,
+                    patientstatus TEXT,
+                    statecode TEXT,
+                    state TEXT)
+                    """)
+    connection.commit()
+    return
+
+
+def insert_deaths_recoveries_data(connection, patient):
+    if connection is None:
+        raise TypeError
+
+    c = connection.cursor()
+    c.execute("""SELECT * FROM deaths_recoveries WHERE slno=:slno""", patient)
+
+    if len(c.fetchall()) == 0:
+        try:
+            c.execute("""INSERT INTO deaths_recoveries VALUES (
+                            :slno,
+                            :date,
+                            :patientstatus,
+                            :statecode,
+                            :state)""", patient)
+        except sqlite3.IntegrityError:
+            print('What the Fuck???')
+            return 1
+        return 0
+    else:
+        return 1
+
+
 def main():
     try:
         with open('databases/raw_data.json', 'r', encoding='utf-8') as data_file:
@@ -90,6 +129,20 @@ def main():
     print(f"Added {patients_added} patients")
 
     conn.close()
+
+    try:
+        with open('databases/deaths_recoveries.json', 'r', encoding='utf-8') as data_file:
+            deaths_recoveries_json = json.load(data_file)
+    except FileNotFoundError:
+        deaths_recoveries_response = requests.get('https://api.covid19india.org/deaths_recoveries.json')
+        deaths_recoveries_json = json.loads(deaths_recoveries_response.text)
+        with open('databases/deaths_recoveries.json', 'w', encoding='utf-8') as data_file:
+            json.dump(raw_data_json, data_file, ensure_ascii=False, indent=4)
+
+    deaths_recoveries_list = deaths_recoveries_json['deaths_recoveries']
+
+    # conn = create_connection()
+
     return 0
 
 

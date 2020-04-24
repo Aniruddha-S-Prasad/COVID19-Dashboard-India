@@ -26,7 +26,7 @@ class PlotHandler:
         raw_count_ax[1].set_title('Current Infected People')
 
         for ax in raw_count_ax.flat:
-            ax.xaxis.set_major_locator(mdates.DayLocator(interval=5))
+            ax.xaxis.set_major_locator(mdates.DayLocator(interval=3))
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
             ax.format_xdata = mdates.DateFormatter('%d/%m/%Y')
             ax.set_xlabel('Time')
@@ -53,7 +53,7 @@ class PlotHandler:
         analysis_ax[2].set_title('Reproductive number')
 
         for ax in analysis_ax.flat:
-            ax.xaxis.set_major_locator(mdates.DayLocator(interval=5))
+            ax.xaxis.set_major_locator(mdates.DayLocator(interval=3))
             ax.xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
             ax.format_xdata = mdates.DateFormatter('%d/%m/%Y')
             ax.set_xlabel('Time')
@@ -71,7 +71,7 @@ class PlotHandler:
 
         ax.plot(x_axis, y, '-o')
 
-        ax.xaxis.set_major_locator(mdates.DayLocator(interval=5))
+        ax.xaxis.set_major_locator(mdates.DayLocator(interval=3))
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
         ax.format_xdata = mdates.DateFormatter('%d-%m-%Y')
 
@@ -101,7 +101,7 @@ class PlotHandler:
         for i in range(len(x_1), np.size(y_fit)):
             x_axis.append(x_axis[i-1] + timedelta(days=1))
         ax.plot(x_axis, y_fit, '--')
-        ax.xaxis.set_major_locator(mdates.DayLocator(interval=5))
+        ax.xaxis.set_major_locator(mdates.DayLocator(interval=3))
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
         ax.format_xdata = mdates.DateFormatter('%d-%m-%Y')
 
