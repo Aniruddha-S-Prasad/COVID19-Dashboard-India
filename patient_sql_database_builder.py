@@ -126,23 +126,9 @@ def main():
 
     conn.commit()
 
-    print(f"Added {patients_added} patients")
+    print(f"Added {patients_added} patients!")
 
     conn.close()
-
-    try:
-        with open('databases/deaths_recoveries.json', 'r', encoding='utf-8') as data_file:
-            deaths_recoveries_json = json.load(data_file)
-    except FileNotFoundError:
-        deaths_recoveries_response = requests.get('https://api.covid19india.org/deaths_recoveries.json')
-        deaths_recoveries_json = json.loads(deaths_recoveries_response.text)
-        with open('databases/deaths_recoveries.json', 'w', encoding='utf-8') as data_file:
-            json.dump(raw_data_json, data_file, ensure_ascii=False, indent=4)
-
-    deaths_recoveries_list = deaths_recoveries_json['deaths_recoveries']
-
-    # conn = create_connection()
-
     return 0
 
 
