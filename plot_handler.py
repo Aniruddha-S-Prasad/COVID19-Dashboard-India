@@ -19,11 +19,11 @@ class PlotHandler:
         x_axis = mdates.date2num(data.dates)
 
         raw_count_fig, raw_count_ax = plt.subplots(2, 1)
-        raw_count_fig.suptitle('Cumulative Counts')
+        raw_count_fig.suptitle('Counts')
         raw_count_ax[0].plot(x_axis, data.affected_count, '-o', color='tab:orange')
         raw_count_ax[0].set_title('Affected People')
         raw_count_ax[1].plot(x_axis, data.infected_count, '-o', color='tab:red')
-        raw_count_ax[1].set_title('Current Infected People')
+        raw_count_ax[1].set_title('Active Cases')
 
         for ax in raw_count_ax.flat:
             ax.xaxis.set_major_locator(mdates.DayLocator(interval=3))

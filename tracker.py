@@ -87,6 +87,7 @@ def main():
     offset_days = 21
     beta = np.divide(dinfected_count[offset_days:] + dremoved_count[offset_days:], infected_count[offset_days:])
     gamma = np.divide(dremoved_count[offset_days:], infected_count[offset_days:])
+
     gamma[gamma == 0] = np.nan
     beta[beta == 0] = np.nan
     smooth_factor = 0.25
