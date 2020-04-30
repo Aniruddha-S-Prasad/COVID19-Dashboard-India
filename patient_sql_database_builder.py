@@ -38,7 +38,11 @@ def insert_patient(connection, patient):
         raise TypeError
 
     c = connection.cursor()
-    c.execute("""SELECT * FROM patients WHERE patientnumber=:patientnumber""", patient)
+    try:
+        c.execute("""SELECT * FROM patients WHERE patientnumber=:patientnumber""", patient)
+    except sqlite3.ProgrammingError:
+        print(patient)
+        raise RuntimeError
 
     if len(c.fetchall()) == 0:
         try:
@@ -79,7 +83,11 @@ def insert_deaths_recoveries_data(connection, patient):
         raise TypeError
 
     c = connection.cursor()
-    c.execute("""SELECT * FROM deaths_recoveries WHERE slno=:slno""", patient)
+    try:
+        c.execute("""SELECT * FROM deaths_recoveries WHERE slno=:slno""", patient)
+    except sqlite3.ProgrammingError:
+        print(patient)
+        raise RuntimeError
 
     if len(c.fetchall()) == 0:
         try:
@@ -97,23 +105,32 @@ def insert_deaths_recoveries_data(connection, patient):
         return 1
 
 
-def main():
+def download_and_load(url: str) -> list:
+
+    with open('databases/raw_data1.json', 'r', encoding='utf-8') as data_file1:
+        raw_data1_json = json.load(data_file1)
+
+    with open('databases/raw_data2.json', 'r', encoding='utf-8') as data_file2:
+        raw_data2_json = json.load(data_file2)
+
     try:
         with open('databases/raw_data.json', 'r', encoding='utf-8') as data_file:
             raw_data_json = json.load(data_file)
-
     except FileNotFoundError:
-        # Get raw data response from api, response in json
-        raw_data_response = requests.get('https://api.covid19india.org/raw_data.json')
-        # json.loads = json.load'string'
+        raw_data_response = requests.get(url)
         raw_data_json = json.loads(raw_data_response.text)
         with open('databases/raw_data.json', 'w', encoding='utf-8') as data_file:
             json.dump(raw_data_json, data_file, ensure_ascii=False, indent=4)
 
-    # Response contains a key value of {'raw_data':'{COMPLETE_DATA_SET}'}
-    # COMPLETE_DATA_SET contains individual data of patients in a list of dicts
+    raw_data_list = raw_data1_json['raw_data'] + raw_data2_json['raw_data'] + raw_data_json['raw_data']
 
-    raw_data_list = raw_data_json['raw_data']
+    return raw_data_list
+
+
+def main():
+
+    url = 'https://api.covid19india.org/raw_data3.json'
+    raw_data_list = download_and_load(url)
 
     conn = create_connection()
     create_patients_table(conn)
@@ -121,9 +138,14 @@ def main():
     patients_added = 0
 
     for raw_data_person in raw_data_list:
-        if insert_patient(conn, raw_data_person) == 0:
-            patients_added += 1
-
+        try:
+            if insert_patient(conn, raw_data_person) == 0:
+                patients_added += 1
+                # print(patients_added)
+        except RuntimeError:
+            print(patients_added)
+            print(raw_data_person['patientnumber'])
+            raise RuntimeError
     conn.commit()
 
     print(f"Added {patients_added} patients!")
