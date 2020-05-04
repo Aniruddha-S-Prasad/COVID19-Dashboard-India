@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import timedelta
 
-from tracker import DataContainer
+from scratch import DataContainer
 
 
 class PlotHandler:
@@ -20,9 +20,9 @@ class PlotHandler:
 
         raw_count_fig, raw_count_ax = plt.subplots(2, 1)
         raw_count_fig.suptitle('Counts')
-        raw_count_ax[0].plot(x_axis, data.affected_count, '-o', color='tab:orange')
+        raw_count_ax[0].plot(x_axis, data.np_data[data.members['total_count'], :], '-o', color='tab:orange')
         raw_count_ax[0].set_title('Affected People')
-        raw_count_ax[1].plot(x_axis, data.infected_count, '-o', color='tab:red')
+        raw_count_ax[1].plot(x_axis, data.np_data[data.members['active_cases'], :], '-o', color='tab:red')
         raw_count_ax[1].set_title('Active Cases')
 
         for ax in raw_count_ax.flat:
@@ -38,18 +38,19 @@ class PlotHandler:
 
         analysis_fig, analysis_ax = plt.subplots(3, sharex=True)
         analysis_fig.suptitle('Analysed Data')
-        analysis_ax[0].plot(x_axis[data.offset_days:], data.gamma, '-o', color='tab:green')
+        date_len = len(x_axis[data.offset_days:])
+        analysis_ax[0].plot(x_axis[data.offset_days:], data.np_data[data.members['gamma'], :][:date_len], '-o', color='tab:green')
         analysis_ax[0].set_title('Gamma')
-        analysis_ax[1].plot(x_axis[data.offset_days:], data.beta, '-o', color='xkcd:goldenrod')
+        analysis_ax[1].plot(x_axis[data.offset_days:], data.np_data[data.members['beta'], :][:date_len], '-o', color='xkcd:goldenrod')
         analysis_ax[1].set_title('Beta')
 
         x_axis = []
         x_axis[:len(data.dates[data.offset_days:])] = data.dates[data.offset_days:]
-        for i in range(len(data.dates[data.offset_days:]), np.size(data.R_0)):
+        for i in range(len(data.dates[data.offset_days:]), date_len):
             x_axis.append(x_axis[i - 1] + timedelta(days=1))
 
         x_axis = mdates.date2num(x_axis)
-        analysis_ax[2].plot(x_axis, data.R_0, '-o', color='purple')
+        analysis_ax[2].plot(x_axis, data.np_data[data.members['reproductive_number'], :][:date_len], '-o', color='purple')
         analysis_ax[2].set_title('Reproductive number')
 
         for ax in analysis_ax.flat:

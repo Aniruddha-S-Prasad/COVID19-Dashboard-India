@@ -15,23 +15,20 @@ def main():
         state_dict = json.load(state_codes)
 
     state_list = list(state_dict.keys())
-    # state_list = ['TT', 'AN', 'AP', 'AR', 'AS', 'BR', 'CH', 'CT', 'DD', 'DL', 'DN', 'GA', 'GJ', 'HP', 'HR', 'JH', 'JK',
-    #               'KA', 'KL', 'LA', 'LD', 'MH', 'ML', 'MN', 'MP', 'MZ', 'NL', 'OR', 'PB', 'PY', 'RJ', 'SK', 'TG', 'TN',
-    #               'TR', 'UP', 'UT', 'WB']
 
     sql_db = dbhl.DatabaseHandler(from_date, to_date)
 
     api_url = 'https://api.covid19india.org/states_daily.json'
-    try:
-        with open('databases/states_daily.json', 'r', encoding='utf-8') as daily_file:
-            states_daily_json = json.load(daily_file)
-            states_daily_list = states_daily_json['states_daily']
-    except FileNotFoundError:
-        states_daily_response = requests.get(api_url)
-        states_daily_json = json.loads(states_daily_response.text)
-        states_daily_list = states_daily_json['states_daily']
-        with open('databases/states_daily.json', 'w', encoding='utf-8') as daily_file:
-            json.dump(states_daily_json, daily_file, ensure_ascii=False, indent=4)
+    # try:
+    #     with open('databases/states_daily.json', 'r', encoding='utf-8') as daily_file:
+    #         states_daily_json = json.load(daily_file)
+    #         states_daily_list = states_daily_json['states_daily']
+    # except FileNotFoundError:
+    states_daily_response = requests.get(api_url)
+    states_daily_json = json.loads(states_daily_response.text)
+    states_daily_list = states_daily_json['states_daily']
+    with open('databases/states_daily.json', 'w', encoding='utf-8') as daily_file:
+        json.dump(states_daily_json, daily_file, ensure_ascii=False, indent=4)
 
     daily_confirmed = {}
     daily_recovered = {}
