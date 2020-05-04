@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import timedelta
 
-from scratch import DataContainer
+from tracker import DataContainer
 
 
 class PlotHandler:
