@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        position: absolute;
+        padding: 40px;
+        background-color: aquamarine;
+        top: calc(50vh - 50px);
+        right: calc(50vw - 80px);
+        transition: all 0.5s;
+      }
+      .moveToRight {
+        transition: all 0.5s;
+        top: 0;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <select name="states" id="select-tag">
+        <option value="">select a state</option>
+        <option value="karnataka">karnataka</option>
+        <option value="andra">andra</option>
+        <option value="telangana">telangana</option>
+      </select>
+    </div>
+    <script>
+      let isSelectedOnce = false;
+      const container = document.querySelector(".container");
+      const select = document.querySelector("#select-tag");
+      select.addEventListener("change", () => {
+        if (!isSelectedOnce) {
+          isSelectedOnce = true;
+          container.classList.add("moveToRight");
+        }
+      });
+    </script>
+  </body>
+</html>

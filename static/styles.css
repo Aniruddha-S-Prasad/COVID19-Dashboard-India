@@ -1,0 +1,12 @@
+body {
+    background-image: url("textures/y-so-serious-white.png");
+}
+
+#vertical-center {
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+}
+
