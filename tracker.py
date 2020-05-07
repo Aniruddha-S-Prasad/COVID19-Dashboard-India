@@ -1,21 +1,11 @@
 import json
-import json_database_builder
-import plot_handler as plthl
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import NamedTuple
 from datetime import date, timedelta
 
-
-class DataContainer(NamedTuple):
-    dates: list
-    offset_days: int
-    np_data: np.ndarray
-    members = {'total_count': 0,
-               'active_cases': 1,
-               'beta': 2,
-               'gamma': 3,
-               'reproductive_number': 4}
+import plot_handler as plthl
+import json_database_builder
+from data_container import DataContainer
 
 
 def smooth_by_interpolation(array: np.ndarray):
@@ -39,15 +29,7 @@ def change_factor_series(array: np.ndarray) -> np.ndarray:
     return abs(np.divide(d_array, np.append(1, array[:len(array)-1])))
 
 
-def get_gamma():
-    return
-
-
-def main():
-
-    state = 'IN'
-    smooth_data = False
-
+def data_analyser(state: str, smooth_data: bool) -> DataContainer:
     from_date = date(2020, 3, 1)
     to_date = date.today() - timedelta(days=1)
     dates = []
@@ -114,14 +96,20 @@ def main():
     counts[3, :][:beta_len] = gamma
     counts[4, :][:beta_len] = reproductive_number
 
-    data = DataContainer(dates, offset_days, counts)
+    return DataContainer(dates, offset_days, counts)
+    
+
+def main():
+    from_date = date(2020, 3, 1)
+    to_date = date.today() - timedelta(days=1)
+    data = data_analyser('IN', False)
     
     plotter = plthl.PlotHandler()
     plotter.plot_all_data(data)
     print(f'As of {to_date}:')
-    print(f'\tTotal Cases:\t{int(total_count[-1])}\n' +
-          f'\tActive Cases:\t{int(active_cases[-1])}\n' +
-          f'\tPeak Cases:\t{int(max(active_cases))}')
+    print(f'\tTotal Cases:\t{int(data.np_data[0, :][-1])}\n' +
+          f'\tActive Cases:\t{int(data.np_data[1, :][-1])}\n' +
+          f'\tPeak Cases:\t{int(max(data.np_data[1, :]))}')
     plt.show()
 
 

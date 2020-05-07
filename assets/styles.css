@@ -1,0 +1,21 @@
+body {
+    background-image: url("y-so-serious-white.png");
+}
+
+.large-display {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    transition: all 0.8s;
+}
+
+.convert-display-to-navbar{
+    transition: all 0.8s;
+    height: 15vh;
+    width: 100vw;
+}
+
+.card{
+    background-color: rgb(255, 255, 255);
+}
