@@ -10,6 +10,10 @@ body {
     transition: all 0.8s;
 }
 
+.wide-display{
+    width: 100vw !important;
+}
+
 .convert-display-to-navbar{
     transition: all 0.8s;
     height: 15vh;

@@ -11,7 +11,7 @@ import app_view
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
 height_left_figs = 300
-height_right_figs = 175
+height_right_figs = 260
 
 app.layout = app_view.layout()
 
@@ -38,7 +38,7 @@ def display_state(input_state):
         'y': data.np_data[data.members['total_count'], :],
         'name': 'Total Cases',
         'type': 'line',
-        'line':{'color':'#FF8B72'}
+        'line':{'color':'orangered'}
     }
 
     recovered_cases = {
@@ -54,7 +54,7 @@ def display_state(input_state):
         'y': data.np_data[data.members['active_cases'], :],
         'name': 'Active Cases',
         'type': 'line',
-        'line':{'color':'orangered'}
+        'line':{'color':'red'}
     }
 
     gamma = {
@@ -118,7 +118,7 @@ def display_state(input_state):
 
     reproductive_number_fig = {
         'data':[r_0],
-        'layout': layout_right
+        'layout': layout_left
     }
     if not state:
         return 'large-display', total_cases_fig, active_cases_fig, gamma_fig, beta_fig, reproductive_number_fig
@@ -128,4 +128,4 @@ def display_state(input_state):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True, port=8080)
+    app.run_server(debug=False, port=8080, host='0.0.0.0')
