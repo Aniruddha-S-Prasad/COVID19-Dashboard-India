@@ -14,6 +14,7 @@ height_left_figs = 300
 height_right_figs = 260
 
 app.layout = app_view.layout()
+app.title = 'COVID-19 Dashboard for India'
 server = app.server
 
 @app.callback([
