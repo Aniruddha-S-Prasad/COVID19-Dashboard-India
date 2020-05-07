@@ -14,6 +14,7 @@ height_left_figs = 300
 height_right_figs = 260
 
 app.layout = app_view.layout()
+server = app.server
 
 @app.callback([
     Output('init-viewport', 'className'),
