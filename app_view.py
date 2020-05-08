@@ -11,9 +11,6 @@ def layout():
     states_dropdown = []
     for state_code, state_name in state_dict.items():
         states_dropdown.append({"label":state_name,"value":state_code})
-    
-    for state_code, state_name in state_dict.items():
-        states_dropdown.append(dbc.DropdownMenuItem(f'{state_name}', key=state_code))
 
     lyt = html.Div(children=[
         html.Div(id='init-viewport', className='large-display', children=[
