@@ -84,23 +84,29 @@ def display_state(input_state):
     }
 
     layout_left = {
+        'yaxis': {
+            'zeroline': False
+        },
         'showlegend': False,
-        'margin': {'t':'20', 'b':'40'},
-        'height': height_left_figs,
+        'margin': {'t':'10', 'b':'40', 'l': '25', 'r':'15'},
+        # 'height': height_left_figs,
         'paper_bgcolor': 'rgba(255, 255, 255, 0.35)',
         'plot_bgcolor': 'rgba(255, 255, 255, 0.35)'
     }
 
     layout_right = {
-        'margin': {'t':'5', 'b':'40'},
-            'height': height_right_figs,
-            'paper_bgcolor': 'rgba(255, 255, 255, 0.35)',
-            'plot_bgcolor': 'rgba(255, 255, 255, 0.35)'
+        'yaxis': {
+            'zeroline': False
+        },
+        'margin': {'t':'0', 'b':'40', 'l': '30', 'r':'5'},
+        # 'height': height_right_figs,
+        'paper_bgcolor': 'rgba(255, 255, 255, 0.35)',
+        'plot_bgcolor': 'rgba(255, 255, 255, 0.35)'
     }
     
     total_cases_fig = {
         'data':[total_cases],
-        'layout': layout_left
+        'layout': layout_left,
     }
 
     active_cases_fig = {
@@ -130,4 +136,4 @@ def display_state(input_state):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=False, port=8080, host='0.0.0.0')
+    app.run_server(debug=True, port=8080, host='0.0.0.0')
