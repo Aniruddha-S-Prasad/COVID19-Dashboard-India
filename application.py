@@ -93,7 +93,7 @@ def display_state(input_state):
             'zeroline': False
         },
         'showlegend': False,
-        'margin': {'t':'10', 'b':'40', 'l': '25', 'r':'15'},
+        'margin': {'t':'10', 'b':'40', 'l': '32', 'r':'15'},
         # 'height': height_left_figs,
         'paper_bgcolor': 'rgba(255, 255, 255, 0.35)',
         'plot_bgcolor': 'rgba(255, 255, 255, 0.35)'
@@ -103,7 +103,7 @@ def display_state(input_state):
         'yaxis': {
             'zeroline': False
         },
-        'margin': {'t':'0', 'b':'40', 'l': '30', 'r':'5'},
+        'margin': {'t':'5', 'b':'40', 'l': '30', 'r':'5'},
         # 'height': height_right_figs,
         'paper_bgcolor': 'rgba(255, 255, 255, 0.35)',
         'plot_bgcolor': 'rgba(255, 255, 255, 0.35)'
@@ -131,7 +131,7 @@ def display_state(input_state):
 
     reproductive_number_fig = {
         'data':[r_0],
-        'layout': layout_left
+        'layout': layout_right
     }
     if not state:
         return 'large-display', total_cases_fig, active_cases_fig, gamma_fig, beta_fig, reproductive_number_fig
