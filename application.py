@@ -8,7 +8,12 @@ from dash.dependencies import Input, Output
 import tracker
 import app_view
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY], meta_tags=[
+    {
+      'name': 'viewport',
+      'content': 'width=device-width, initial-scale=1.0'
+    }
+])
 
 height_left_figs = 300
 height_right_figs = 260

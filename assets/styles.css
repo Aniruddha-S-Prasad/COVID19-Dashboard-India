@@ -7,7 +7,7 @@ body {
     width: 100vw;
     display: flex;
     align-items: center;
-    transition: all 0.8s;
+    transition: all 0.5s;
 }
 
 .wide-display{
@@ -15,11 +15,18 @@ body {
 }
 
 .convert-display-to-navbar{
-    transition: all 0.8s;
+    transition: all 0.5s;
     height: 20vh;
     width: 100vw;
 }
 
+@media screen and (max-width: 768px){
+    .convert-display-to-navbar{
+        transition: all 0.5s;
+        height: 40vh;
+        width: 100vw;
+    }
+}
 
 .graph{
     height: 27vh;

@@ -17,7 +17,7 @@ def layout():
             html.Div(className='container-fluid', children=[
                 html.Div(className='row align-items-center justify-content-center', children=[
                     html.Div(className='col-lg-8', children=[
-                        html.H1(className='display-4 text-center', children='COVID-19 Dashboard')
+                        html.H4(className='display-4 text-center', children='COVID-19 Dashboard')
                     ]),
                     html.Div(className='w-100', children=[]),
                     html.Div(className='col-lg-4', children=[
@@ -36,32 +36,32 @@ def layout():
                 # html.Div(className='col-lg-1', children=[]),
                 html.Div(className='col-lg-4', children=[
                     html.Div(className='card shadow px-4 mb-3 bg-white rounded', style={'max-width': '50rem'}, children=[
-                        html.H4(className='card-title text-center pt-3', children='Total Cases'),
+                        html.H3(className='card-title text-center pt-3', children='Total Cases'),
                         dcc.Graph(id='Total-Cases', className='graph', config={'displayModeBar': False})
                     ]),
                     html.Div(className='w-100', children=[]),
                     html.Div(className='card shadow px-4 mb-3 bg-white rounded', style={'max-width': '50rem'}, children=[
-                        html.H4(className='card-title text-center pt-3', children='Active and Recovered Cases'),
+                        html.H3(className='card-title text-center pt-3', children='Active and Recovered Cases'),
                         dcc.Graph(id='Active-Cases', className='graph', config={'displayModeBar': False})
                     ])
                 ]),
                 html.Div(className='col-lg-4', children=[
                     html.Div(className='card shadow px-4 mb-1 bg-white rounded', style={'max-width': '50rem'}, children=[
-                        html.H4(className='card-title text-center pt-3', children='Recovery Rate of Active Cases'),
-                        html.P(className='card-text pl-5', children=['Probability of recovery from infection (Includes deceased cases)']),
+                        html.H3(className='card-title text-center pt-3', children='Recovery Rate of Active Cases'),
+                        html.P(className='card-text pl-3', children=['Probability of recovery from infection (Includes deceased cases)']),
                         dcc.Graph(id='Gamma', className='graph', config={'displayModeBar': False})
                     ]),
                     html.Div(className='w-100', children=[]),
                     html.Div(className='card shadow px-4 mb-1 bg-white rounded', style={'max-width': '50rem'}, children=[
-                        html.H4(className='card-title text-center pt-3', children='Transmission Rate of Active Cases '),
-                        html.P(className='card-text pl-5', children=['Probability of transmission of infection from an active case to a person in the general population']),
+                        html.H3(className='card-title text-center pt-3', children='Transmission Rate of Active Cases '),
+                        html.P(className='card-text pl-3', children=['Probability of transmission of infection from an active case to a person in the general population']),
                         dcc.Graph(id='Beta', className='graph', config={'displayModeBar': False})
                     ])
                 ]),
                 html.Div(className='col-lg-4', children=[
                     html.Div(className='card shadow px-4 mb-1 bg-white rounded', style={'max-width': '50rem'}, children=[
-                        html.H4(className='card-title text-center pt-3', children='Reproductive Number'),
-                        html.P(className='card-text pl-5', children=['Number of additional infections caused by an infected person before recovery']),
+                        html.H3(className='card-title text-center pt-3', children='Reproductive Number'),
+                        html.P(className='card-text pl-3', children=['Number of additional infections caused by an infected person before recovery']),
                         dcc.Graph(id='R-0', className='graph', config={'displayModeBar': False})
                     ])
                 ]),
