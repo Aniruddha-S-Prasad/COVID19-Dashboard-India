@@ -100,7 +100,7 @@ def layout(github_img_url, linkedin_img_url):
                                             href='https://github.com/Aniruddha-S-Prasad/COVID19-Tracker/tree/web-development',
                                             children=[
                                                 html.Img(className='icons', src=github_img_url),
-                                                ' Contribute on Github'
+                                                ' Github Repository'
                                             ]),
                                     ]),
                                     html.Div(className='col', children=[

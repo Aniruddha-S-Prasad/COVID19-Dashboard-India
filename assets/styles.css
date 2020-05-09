@@ -10,6 +10,10 @@ a {
     color: cornflowerblue;
 }
 
+h3 {
+    font-size: 1.3rem;
+}
+
 .large-display {
     height: 100vh;
     width: 100vw;
