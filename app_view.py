@@ -24,6 +24,7 @@ def layout(github_img_url, linkedin_img_url):
                         html.P(className='font-weight-normal text-center', children='Select a state'),
                         dbc.Select(
                             id='state',
+                            className='shadow px-4 mb-1 bg-white rounded',
                             options=states_dropdown,
                         ),
                     html.Div(className='w-100', children=[])
