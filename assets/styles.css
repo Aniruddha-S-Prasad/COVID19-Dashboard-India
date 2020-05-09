@@ -2,6 +2,14 @@ body {
     background-image: url("y-so-serious-white.png");
 }
 
+select {
+    font-size: 1.5rem;
+}
+
+a {
+    color: cornflowerblue;
+}
+
 .large-display {
     height: 100vh;
     width: 100vw;
@@ -26,6 +34,11 @@ body {
         height: 40vh;
         width: 100vw;
     }
+}
+
+.icons {
+    height: 1rem;
+    width: 1rem;
 }
 
 .graph{

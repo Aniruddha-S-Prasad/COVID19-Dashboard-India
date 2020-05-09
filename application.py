@@ -4,21 +4,26 @@ import dash
 import numpy as np
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
+from datetime import date, datetime
 
 import tracker
 import app_view
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY], meta_tags=[
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.LUX], meta_tags=[
     {
       'name': 'viewport',
       'content': 'width=device-width, initial-scale=1.0'
     }
 ])
 
+data = tracker.data_analyser('IN', False)
+
 height_left_figs = 300
 height_right_figs = 260
 
-app.layout = app_view.layout()
+github_img_url = app.get_asset_url('github.png')
+linkedin_img_url = app.get_asset_url('linkedin.png')
+app.layout = app_view.layout(github_img_url, linkedin_img_url)
 app.title = 'COVID-19 Dashboard for India'
 server = app.server
 
@@ -137,6 +142,14 @@ def display_state(input_state):
         return 'large-display', total_cases_fig, active_cases_fig, gamma_fig, beta_fig, reproductive_number_fig
     else:
         return 'large-display convert-display-to-navbar', total_cases_fig, active_cases_fig, gamma_fig, beta_fig, reproductive_number_fig
+
+@app.callback(
+    Output('update-string', 'children'),
+    [Input('state', 'value')]
+)
+def update_date(input_state):
+    date_string = data.dates[-1].strftime('%d-%m-%Y')
+    return f'Updated on {date_string}'
 
 
 
