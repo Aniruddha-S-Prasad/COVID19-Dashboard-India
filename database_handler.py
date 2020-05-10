@@ -4,11 +4,12 @@ Created on Fri Apr 17 14:37:38 2020
 
 @author: Aniruddha-S-Prasad
 """
-import deceased_handler
-import recovered_handler
 import sqlite3
 import numpy as np
 from datetime import datetime, date, timedelta
+
+import deceased_handler
+import recovered_handler
 
 
 class DatabaseHandler:

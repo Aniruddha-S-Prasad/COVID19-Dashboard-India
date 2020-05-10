@@ -2,9 +2,10 @@ import json
 import requests
 import csv
 import numpy as np
-import database_handler as dbhl
 from typing import NamedTuple
 from datetime import date, timedelta
+
+import database_handler as dbhl
 
 
 def main():
