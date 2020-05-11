@@ -2,13 +2,11 @@
 
 A web application for data visualization and analysis of the current COVID-19 pandemic in India. Provides state-wise analysis of the data using a time-dependant  _Susceptible, Infected and Recovered model_.
 
-[Source Code in Github](https://github.com/Aniruddha-S-Prasad/COVID19-Tracker)
+[Source Code in Github](https://github.com/Aniruddha-S-Prasad/COVID19-Dashboard-India)
 
 ---
 
 ## Web Application
-
-The source code for the web-application is available in the [web-development branch](https://github.com/Aniruddha-S-Prasad/COVID19-Tracker/tree/web-development) of the repository on Github.
 
 This application is written in Python and is based on the [Dash framework](https://dash.plotly.com/introduction), and uses [Bootstrap](https://getbootstrap.com/) for implementing a responsive layout.
 
