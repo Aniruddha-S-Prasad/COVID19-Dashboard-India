@@ -1,6 +1,6 @@
 # COVID-19 Dashboard for India
 
-A web application for data visualization and analysis of the current COVID-19 pandemic in India. Provides state-wise analysis of the data using a time-dependant  _Susceptible, Infected and Recovered model_.
+A web application for data visualization and analysis of the current COVID-19 pandemic in India. Provides state-wise analysis of the data using a time-dependant  _Susceptible, Infected and Recovered model_. Updates daily.
 
 [Source Code in Github](https://github.com/Aniruddha-S-Prasad/COVID19-Dashboard-India)
 
