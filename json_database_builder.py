@@ -47,7 +47,7 @@ def main():
     for item in states_daily_list:
         case = item['status']
         for state, count in item.items():
-            if state == 'status' or state == 'date':
+            if state == 'status' or state == 'date' or state == 'un':
                 continue
             state = state.upper()
             if count == '':

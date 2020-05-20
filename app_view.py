@@ -97,7 +97,8 @@ def layout(github_img_url, linkedin_img_url):
                                 html.Div(className='row justify-content-center align-items-center', children=[
                                     html.Div(className='col', children=[
                                         html.A(className='btn btn-dark align-items-center', target='_blank',
-                                            href='https://github.com/Aniruddha-S-Prasad/COVID19-Tracker/tree/web-development',
+                                            # TODO Update links
+                                            href='https://github.com/Aniruddha-S-Prasad/COVID19-Dashboard-India',
                                             children=[
                                                 html.Img(className='icons', src=github_img_url),
                                                 ' Github Repository'
