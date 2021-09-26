@@ -1,10 +1,10 @@
 import json
 import requests
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from datetime import date, timedelta
 
-import plot_handler as plthl
+# import plot_handler as plthl
 import json_database_builder
 from data_container import DataContainer
 
@@ -122,17 +122,17 @@ def data_analyser(state: str, smooth_data: bool) -> DataContainer:
     
 
 def main():
-    from_date = date(2020, 3, 1)
-    to_date = date.today() - timedelta(days=1)
-    data = data_analyser('IN', False)
+    # from_date = date(2020, 3, 1)
+    # to_date = date.today() - timedelta(days=1)
+    # data = data_analyser('IN', False)
     
-    plotter = plthl.PlotHandler()
-    plotter.plot_all_data(data)
-    print(f'As of {to_date}:')
-    print(f'\tTotal Cases:\t{int(data.np_data[0, :][-1])}\n' +
-          f'\tActive Cases:\t{int(data.np_data[1, :][-1])}\n' +
-          f'\tPeak Cases:\t{int(max(data.np_data[1, :]))}')
-    plt.show()
+    # plotter = plthl.PlotHandler()
+    # plotter.plot_all_data(data)
+    # print(f'As of {to_date}:')
+    # print(f'\tTotal Cases:\t{int(data.np_data[0, :][-1])}\n' +
+    #       f'\tActive Cases:\t{int(data.np_data[1, :][-1])}\n' +
+    #       f'\tPeak Cases:\t{int(max(data.np_data[1, :]))}')
+    # plt.show()
 
 
     return 0
