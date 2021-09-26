@@ -1,3 +1,6 @@
 .venv/
+.idea/
+papers/
 .vscode/
 __pycache__/
+data_files_html/

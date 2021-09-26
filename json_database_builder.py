@@ -19,7 +19,8 @@ def main():
 
     sql_db = dbhl.DatabaseHandler(from_date, to_date)
 
-    api_url = 'https://api.covid19india.org/states_daily.json'
+    # api_url = 'https://api.covid19india.org/states_daily.json'
+    api_url = 'https://data.covid19india.org/v4/min/timeseries.min.json'
     # try:
     #     with open('databases/states_daily.json', 'r', encoding='utf-8') as daily_file:
     #         states_daily_json = json.load(daily_file)
@@ -27,7 +28,7 @@ def main():
     # except FileNotFoundError:
     states_daily_response = requests.get(api_url)
     states_daily_json = json.loads(states_daily_response.text)
-    states_daily_list = states_daily_json['states_daily']
+    states_daily_list = states_daily_json#['states_daily']
     with open('databases/states_daily.json', 'w', encoding='utf-8') as daily_file:
         json.dump(states_daily_json, daily_file, ensure_ascii=False, indent=4)
 

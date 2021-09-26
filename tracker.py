@@ -1,4 +1,5 @@
 import json
+import requests
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import date, timedelta
@@ -30,42 +31,63 @@ def change_factor_series(array: np.ndarray) -> np.ndarray:
 
 
 def data_analyser(state: str, smooth_data: bool) -> DataContainer:
-    from_date = date(2020, 3, 1)
-    to_date = date.today() - timedelta(days=1)
-    dates = []
+    # from_date = date(2020, 3, 1)
+    # to_date = date.today() - timedelta(days=1)
+    # dates = []
     
-    month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    # month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-    with open('databases/database.json', 'r') as db:
-        database = json.load(db)
+    # with open('databases/database.json', 'r') as db:
+    #     database = json.load(db)
 
-    if database['to_date'] != f'{to_date.day:02d}-{month[to_date.month-1]}-{to_date.year}':
-        json_database_builder.main()
-        database = None
-        with open('databases/database.json', 'r') as db:
-            database = json.load(db)
-
+    # if database['to_date'] != f'{to_date.day:02d}-{month[to_date.month-1]}-{to_date.year}':
+    #     json_database_builder.main()
+    #     database = None
+    #     with open('databases/database.json', 'r') as db:
+    #         database = json.load(db)
     if state == 'IN':
         state = 'TT'
-    state_data = database[state]
     
-    data_len = len(state_data['Confirmed'])
-    recovered_daily = np.array(state_data['Recovered'], dtype=int)
-    deceased_daily = np.array(state_data['Deceased'], dtype=int)
-    confirmed_daily = np.array(state_data['Confirmed'], dtype=int)
+    api_url = 'https://data.covid19india.org/v4/min/timeseries.min.json'
+    time_series_response = json.loads(requests.get(api_url).text)
+    
+    state_data = time_series_response[state]['dates']
+    dates_str = list(state_data.keys())
 
-    total_count = np.zeros(data_len)
-    total_recovered = np.zeros(data_len)
-    total_deceased = np.zeros(data_len)
-    for index in range(data_len):
-        dates.append(from_date + timedelta(days=index))
+    confirmed_daily = []
+    deceased_daily = []
+    recovered_daily = []
+    dates = []
 
-        total_count[index] = np.sum(confirmed_daily[:index+1])
-        total_recovered[index] = np.sum(recovered_daily[:index+1])
-        total_deceased[index] = np.sum(deceased_daily[:index+1])
+    for date_str in dates_str:
+        dates.append(date.fromisoformat(date_str))
+        try:
+            confirmed_daily.append(int(state_data[date_str]['delta']['confirmed']))
+        except KeyError:
+            confirmed_daily.append(0)
+        try:
+            deceased_daily.append(int(state_data[date_str]['delta']['deceased']))
+        except KeyError:
+            deceased_daily.append(0)
+        try:
+            recovered_daily.append(int(state_data[date_str]['delta']['recovered']))
+        except KeyError:
+            recovered_daily.append(0)
+    
+
+    confirmed_daily = np.array(confirmed_daily)
+    recovered_daily = np.array(recovered_daily)
+    deceased_daily = np.array(deceased_daily)
+        
+    data_len = len(dates_str)
+
+    total_count = np.cumsum(confirmed_daily)
+    total_recovered = np.cumsum(recovered_daily)
+    total_deceased = np.cumsum(deceased_daily)
+
     active_cases = total_count - total_recovered - total_deceased
     
-    offset_days = 21
+    offset_days = 30
 
     # beta = np.divide(confirmed_daily[offset_days:], 1)
     beta = np.gradient(total_count[offset_days:])/active_cases[offset_days:]
