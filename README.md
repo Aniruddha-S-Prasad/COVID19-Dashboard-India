@@ -1,6 +1,6 @@
 # COVID-19 Dashboard for India
 
-A web application for data visualization and analysis of the current COVID-19 pandemic in India. Provides state-wise analysis of the data using a time-dependant  _Susceptible, Infected and Recovered model_. Updates daily.
+A web application for data visualization and analysis of the current COVID-19 pandemic in India. Provides state-wise analysis of the data using a time-dependant  _Susceptible, Infected and Recovered model_. Used to update daily (depricated).
 
 [Source Code in Github](https://github.com/Aniruddha-S-Prasad/COVID19-Dashboard-India)
 
@@ -26,13 +26,13 @@ python application.py
 
 which launches development flask server on the __localhost__ port __8080__ and can be accessed through going to the addresses `127.0.0.1:8080` or `0.0.0.0:8080`  in a web browser.
 
-Currently, an instance of this web application is running at [COVID-19 Dashboard](http://covid19-stats-india.herokuapp.com/), which is deployed using [Heroku](https://www.heroku.com)
+Previously, an instance of this application was running at [COVID-19 Dashboard](http://covid19-stats-india.herokuapp.com/) (now depricated), which was deployed using [Heroku](https://www.heroku.com)
 
 ---
 
 ## Analysis
 
-The file `tracker.py` queries the [API](https://api.covid19india.org/) to get state-wise data on the cases identified, recovered and deceased on a certain date and stores it in a JSON database file. From this data, the date wise total, active and recovered cases can be obtained. These are then analyzed according to a time-dependent  _Susceptible, Infected and Recovered model_ given by Yi-Cheng Chen et al. in their paper [A Time-dependent SIR model for COVID-19 with Undetectable Infected Persons](http://gibbs1.ee.nthu.edu.tw/A_TIME_DEPENDENT_SIR_MODEL_FOR_COVID_19.PDF) 
+The file `tracker.py` queries the API (now depricated covid19india.org api) to get state-wise data on the cases identified, recovered and deceased on a certain date and stores it in a JSON database file. From this data, the date wise total, active and recovered cases can be obtained. These are then analyzed according to a time-dependent  _Susceptible, Infected and Recovered model_ given by Yi-Cheng Chen et al. in their paper [A Time-dependent SIR model for COVID-19 with Undetectable Infected Persons](http://gibbs1.ee.nthu.edu.tw/A_TIME_DEPENDENT_SIR_MODEL_FOR_COVID_19.PDF) 
 
 This model yields three parameters that govern the progression of the disease through the population, which are __Beta__, __Gamma__, and the ratio of the two which is the __Reproductive Number__.
 * __Beta__ is the probability of transmission of the infection from an active case to a person in the _Suceptible_ population. In the case where the disease progression is being halted by measures taken, such as lockdown, social distancing, and patient isolation, __Beta__ reduces.
@@ -57,6 +57,6 @@ This project tries to follow the __Model-View-Controller__ design pattern. The s
 
 #### Data Sources
 
-The data for this project is provided by the [COVID-19 India](https://www.covid19india.org/) project, using their [API](https://api.covid19india.org/). This provides granular data on the patients in India and can be filtered easily.
+The data for this project was provided by the COVID-19 India project, using their API (website and api are now depricated). This provided granular data on the patients in India and could be filtered easily.
 
 
